@@ -1,6 +1,6 @@
-# vue-boilerplate
+# vue-capacitor-boilerplate
 
-This template should help get you started developing with Vue 3 in Vite.
+This template should help get you started developing with Capacitor v5 and Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
