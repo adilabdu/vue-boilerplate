@@ -1,0 +1,10 @@
+{
+  "appId": "com.adilabdu.apps.boilerplate",
+  "appName": "vue-capacitor-boilerplate",
+  "webDir": "dist",
+  "server": {
+    "url": "http://localhost:5173/",
+    "cleartext": true,
+    "androidScheme": "https"
+  }
+}
