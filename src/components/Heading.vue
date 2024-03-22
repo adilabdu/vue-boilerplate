@@ -26,7 +26,7 @@ const style = computed(() => {
     case "5":
       return "text-xs";
     case "6":
-      return "text-xs text-gray-500";
+      return "text-xs text-slate-500";
     case "4":
     default:
       return "text-sm";
