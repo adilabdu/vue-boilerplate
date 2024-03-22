@@ -6,7 +6,9 @@ class HTTP {
         this.instance = axios.create({
             baseURL: import.meta.env.VITE_API_BASE_URL,
             timeout: 2000,
-            headers: {}
+            headers: {
+                "Content-Type": "application/json",
+            },
         })
     }
 
@@ -14,7 +16,7 @@ class HTTP {
         return await this.instance.get(endpoint, config);
     }
 
-    async post(endpoint, data, config = {}) {
+    async post(endpoint, data = {}, config = {}) {
         return await this.instance.post(endpoint, data, config);
     }
 
@@ -24,6 +26,14 @@ class HTTP {
 
     async delete(endpoint, config = {}) {
         return await this.instance.delete(endpoint, config);
+    }
+
+    setDefaults(props, value) {
+        switch (props) {
+            case 'Authorization':
+                this.instance.defaults.headers.common['Authorization'] = `Bearer ${value}`;
+                break;
+        }
     }
 }
 

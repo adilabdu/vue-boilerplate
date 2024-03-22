@@ -8,10 +8,10 @@ import {
   FormControl,
   FormDescription,
   FormMessage,
-} from '@/components/shadcn/ui/form';
+} from '@/components/shadcn/ui/form/index.js';
 import {
   Input
-} from '@/components/shadcn/ui/input';
+} from '@/components/shadcn/ui/input/index.js';
 import Button from "@/components/shadcn/ui/button/Button.vue";
 import * as z from 'zod';
 import Card from "@/components/shadcn/ui/card/Card.vue";
@@ -20,9 +20,15 @@ import CardTitle from "@/components/shadcn/ui/card/CardTitle.vue";
 import CardDescription from "@/components/shadcn/ui/card/CardDescription.vue";
 import CardContent from "@/components/shadcn/ui/card/CardContent.vue";
 import Heading from "@/components/Heading.vue";
+import http from "@/utils/http/index.js"
+import Error from "@/utils/http/error.js";
+import {useAuthenticationStore} from "@/composables/useAuthenticationStore.js";
+import router from "@/router/index.js";
+
+const authStore = useAuthenticationStore()
 
 const formSchema = toTypedSchema(z.object({
-  email: z.string().email(),
+  emailOrPhone: z.string().email(),
   password: z.string()
 }))
 
@@ -30,8 +36,13 @@ const form = useForm({
   validationSchema: formSchema,
 })
 
-const submit = form.handleSubmit(values => {
-  alert(JSON.stringify(values))
+const submit = form.handleSubmit(async (values) => {
+  await http.post('/login', values)
+      .then(value => {
+        authStore.setUser(value.data);
+        router.push({ name: 'dashboard' })
+      })
+      .catch(error => new Error(error).notify())
 })
 
 </script>
@@ -51,7 +62,7 @@ const submit = form.handleSubmit(values => {
       </CardHeader>
       <CardContent>
         <form @submit="submit" class="flex flex-col gap-4">
-          <FormField v-slot="{ componentField }" name="email">
+          <FormField v-slot="{ componentField }" name="emailOrPhone">
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
