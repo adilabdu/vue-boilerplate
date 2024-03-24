@@ -13,8 +13,7 @@ const isAuthenticated = computed(() => Boolean(authStore.user))
 <template>
 
   <div
-    :class="[ isAuthenticated ? 'max-w-4xl' : 'max-w-xl' ]"
-    class="w-full mx-auto flex items-center justify-between gap-4"
+    class="max-w-xl w-full mx-auto flex items-center justify-between gap-4"
   >
 
     <RouterLink :to="{ name: 'homepage' }">
@@ -22,14 +21,8 @@ const isAuthenticated = computed(() => Boolean(authStore.user))
     </RouterLink>
 
     <nav>
-      <ul class="flex gap-3 items-center">
-        <template v-if="isAuthenticated">
-          <MemberNavigation />
-        </template>
-        <template v-else>
-          <GuestNavigation />
-        </template>
-      </ul>
+      <MemberNavigation v-if="isAuthenticated" />
+      <GuestNavigation v-else />
     </nav>
   </div>
 
