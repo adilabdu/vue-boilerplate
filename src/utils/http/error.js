@@ -1,3 +1,6 @@
+import {useAuthenticationStore} from "@/composables/useAuthenticationStore.js";
+import router from "@/router/index.js";
+
 export default class Error {
     constructor(error) {
         if (error.response) {
@@ -9,6 +12,8 @@ export default class Error {
                 case 399 < error.response.status < 500:
                     // Server responded with a client error
                     this.data = error.response.data;
+                    // Clear user data if error is 401
+                    router.push({ name: 'homepage' }).then(() => useAuthenticationStore().removeUser())
                     break;
                 case error.response.status > 499:
                     // Server responded with server error
