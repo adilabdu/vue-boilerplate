@@ -1,9 +1,13 @@
 <script setup>
-import Heading from "@/components/Heading.vue";
 import http from "@/utils/http"
 import Error from "@/utils/http/error.js";
-import {useAuthenticationStore} from "@/composables/useAuthenticationStore.js";
+import { useAuthenticationStore } from "@/composables/useAuthenticationStore.js";
 import router from "@/router/index.js";
+import { LogOut } from "lucide-vue-next";
+import {
+  DropdownMenuItem,
+  DropdownMenuShortcut
+} from "@/components/shadcn/ui/dropdown-menu/index.js";
 
 const authStore = useAuthenticationStore()
 
@@ -19,9 +23,11 @@ async function submit() {
 
 <template>
   <form @submit.prevent.once="submit">
-    <button type="submit">
-      <Heading>Logout</Heading>
-    </button>
+    <DropdownMenuItem class="w-full" as="button">
+      <LogOut class="mr-2 h-4 w-4" />
+      <span>Log out</span>
+      <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+    </DropdownMenuItem>
   </form>
 </template>
 
